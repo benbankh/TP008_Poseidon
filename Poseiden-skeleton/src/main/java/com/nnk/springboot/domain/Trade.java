@@ -2,6 +2,7 @@ package com.nnk.springboot.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 
@@ -13,8 +14,15 @@ public class Trade {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     Integer tradeId;
+
+    @NotBlank (message = "L'account ne peut être vide")
+    @Column(nullable = false)
     String account;
+    @NotBlank (message = "Le type ne peut être vide")
+    @Column(nullable = false)
     String type;
+    @NotNull(message = "La quantité ne peut être vide")
+    @Column(nullable = false)
     Double buyQuantity;
     Double sellQuantity;
     Double buyPrice;
@@ -33,6 +41,9 @@ public class Trade {
     String dealType;
     String sourceListId;
     String side;
+
+    public Trade() {
+    }
 
     public Trade(String account, String type) {
         this.account = account;

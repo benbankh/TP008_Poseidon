@@ -3,8 +3,10 @@ package com.nnk.springboot.domain;
 import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -15,8 +17,14 @@ public class BidList {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer BidListId;
+    @NotBlank (message = "L'account ne peut être vide")
+    @Column(nullable = false)
     private String account;
+    @NotBlank (message = "Le type ne peut être vide")
+    @Column(nullable = false)
     private String type;
+    @NotNull (message = "La quantité ne peut être vide")
+    @Column(nullable = false)
     private Double bidQuantity;
     private Double askQuantity;
     private Double bid;

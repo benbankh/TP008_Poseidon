@@ -12,6 +12,7 @@
 		<div class="col-6">
 			<a href="/user/list">User List</a>&nbsp;|&nbsp;
 			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
 			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
 			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
 			<a href="/ruleName/list">Rule</a>
@@ -39,11 +40,12 @@
 			<tbody>
 				<tr th:each="curvePoint : ${curvePoints}">
 					<td style="width: 10%" th:text="${curvePoint.id}"></td>
-					<td th:text="${curvePoint.CurvePointId}"></td>
+					<td th:text="${curvePoint.curveId}"></td>
 					<td th:text="${curvePoint.Term}"></td>
 					<td th:text="${curvePoint.Value}"></td>
-						<a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a>&nbsp;|&nbsp;
-						<a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
+					<td style="width: 15%" class="text-center">
+						<a th:href="@{/curvePoint/update/{id}(id=${curvePoint.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/curvePoint/delete/{id}(id=${curvePoint.id})}">Delete</a>
 					</td>
 				</tr>
 			</tbody>

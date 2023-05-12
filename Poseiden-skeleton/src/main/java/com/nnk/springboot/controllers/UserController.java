@@ -45,7 +45,7 @@ public class UserController {
 
             //return "/user/list"; //si on fait ça on arrive ici "user/validate" / j'ai l'impression que le redirect est appelé si on change de page..
         }
-        return "user/add"; //..là on resterai sur la même page
+        return "user/add"; //..là on resterait sur la même page
     }
 
 

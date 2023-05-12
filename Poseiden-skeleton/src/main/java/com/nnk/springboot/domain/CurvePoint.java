@@ -15,11 +15,17 @@ public class CurvePoint {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     Integer id;
+    @NotNull
+    @Column(nullable = false)
     Integer curveId;
     Timestamp asOfDate;
     Double term;
     Double value;
     Timestamp creationDate;
+
+    public CurvePoint() {
+
+    }
 
     public CurvePoint(Integer curveId, Double term, Double value) {
         this.curveId = curveId;
