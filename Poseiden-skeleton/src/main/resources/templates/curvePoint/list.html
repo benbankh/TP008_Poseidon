@@ -10,8 +10,8 @@
 <div class="container">
 	<div class="row">
 		<div class="col-6">
+			<a href="/user/list">User List</a>&nbsp;|&nbsp;
 			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
-			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
 			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
 			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
 			<a href="/ruleName/list">Rule</a>
@@ -37,7 +37,15 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all CurvePoint to the table, the action column will have Edit & Delete buttons -->
+				<tr th:each="curvePoint : ${curvePoints}">
+					<td style="width: 10%" th:text="${curvePoint.id}"></td>
+					<td th:text="${curvePoint.CurvePointId}"></td>
+					<td th:text="${curvePoint.Term}"></td>
+					<td th:text="${curvePoint.Value}"></td>
+						<a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

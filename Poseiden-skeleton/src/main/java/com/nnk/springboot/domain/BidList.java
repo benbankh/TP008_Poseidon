@@ -11,8 +11,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "bidlist")
 public class BidList {
-    // TODO: Map columns in data table BIDLIST with corresponding java fields
-
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -38,6 +36,10 @@ public class BidList {
     private String dealType;
     private String sourceListId;
     private String side;
+
+    public BidList(){
+
+    }
 
     public BidList(String account, String type, Double bidQuantity) {
         this.account = account;

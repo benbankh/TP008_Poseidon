@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -10,7 +10,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-6">
-			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+			<a href="/user/list">User List</a>&nbsp;|&nbsp;
 			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
 			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
 			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
@@ -38,6 +38,16 @@
 			</thead>
 			<tbody>
 				<!-- TODO: Show all Bids to the table, the Action column will have Edit & Delete buttons -->
+				<tr th:each="bid : ${bidlist}">
+					<td style="width: 10%" th:text="${bid.BidListId}"></td>
+					<td th:text="${bid.account}"></td>
+					<td th:text="${bid.type}"></td>
+					<td style="width: 25%" th:text="${bid.bidQuantity}"></td>
+					<td style="width: 15%" class="text-center">
+						<a th:href="@{/bidList/update/{id}(id=${bid.BidListId})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/bidList/delete/{id}(id=${bid.BidListId})}">Delete</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

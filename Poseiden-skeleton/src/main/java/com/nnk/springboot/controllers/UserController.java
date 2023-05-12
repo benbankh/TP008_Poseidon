@@ -3,7 +3,7 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +19,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping("/user/list")
+    @RequestMapping("/user/list")   // sans spécifier l'attribut method => mappée à toutes les méthodes HTTP par défaut. Cela inclut les requêtes GET, POST, PUT, DELETE, etc.
     public String home(Model model)
     {
         model.addAttribute("users", userRepository.findAll());
@@ -31,17 +31,24 @@ public class UserController {
         return "user/add";
     }
 
+
     @PostMapping("/user/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
         if (!result.hasErrors()) {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            user.setPassword(encoder.encode(user.getPassword()));
+           // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+           // user.setPassword(encoder.encode(user.getPassword()));
+            user.setPassword(user.getPassword());
             userRepository.save(user);
+
             model.addAttribute("users", userRepository.findAll());
             return "redirect:/user/list";
+
+            //return "/user/list"; //si on fait ça on arrive ici "user/validate" / j'ai l'impression que le redirect est appelé si on change de page..
         }
-        return "user/add";
+        return "user/add"; //..là on resterai sur la même page
     }
+
+
 
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
@@ -51,20 +58,22 @@ public class UserController {
         return "user/update";
     }
 
+    /* */
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid User user,
-                             BindingResult result, Model model) {
+    public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "user/update";
         }
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
+        //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        //user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
         user.setId(id);
         userRepository.save(user);
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/user/list";
     }
+
 
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
