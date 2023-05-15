@@ -40,8 +40,12 @@ public class UserController {
             user.setPassword(user.getPassword());
             userRepository.save(user);
 
+            //model.addAttribute("users", userRepository.findAll());
+            //return "redirect:/user/list";// => va appeler le controler, donc la ligne au dessus ne sert à rien
+
+            //autre façon de faire => pas de redirect, on doit alors faire le findAll
             model.addAttribute("users", userRepository.findAll());
-            return "redirect:/user/list";
+            return "user/list";
 
             //return "/user/list"; //si on fait ça on arrive ici "user/validate" / j'ai l'impression que le redirect est appelé si on change de page..
         }
@@ -58,7 +62,6 @@ public class UserController {
         return "user/update";
     }
 
-    /* */
     @PostMapping("/user/update/{id}")
     public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {

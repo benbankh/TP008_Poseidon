@@ -14,6 +14,7 @@ public class Rating {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     Integer id;
+    @NotBlank(message = "Moodys Rating ne doit pas être nul")
     String moodysRating;
     String sandPRating;
     String fitchRating;
