@@ -3,6 +3,7 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 
@@ -20,6 +22,7 @@ public class BidListController {
     @Autowired
     private BidListRepository bidListRepository;
 
+    @RolesAllowed({"USER","ADMIN"})
     @RequestMapping("/bidList/list")
     public String home(Model model)
     {
@@ -35,8 +38,6 @@ public class BidListController {
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
         if (!result.hasErrors()) {
-            // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            // user.setPassword(encoder.encode(user.getPassword()));
 
             bidListRepository.save(bid);
             model.addAttribute("bidList", bidListRepository.findAll());

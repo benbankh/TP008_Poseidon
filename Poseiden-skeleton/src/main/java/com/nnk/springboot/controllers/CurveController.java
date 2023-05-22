@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @Controller
@@ -19,6 +20,7 @@ public class CurveController {
     @Autowired
     private CurvePointRepository curvePointRepository;
 
+    @RolesAllowed({"ADMIN"})
     @RequestMapping("/curvePoint/list") //par défaut ça correspond à la méthode GET
     public String home(Model model)
     {

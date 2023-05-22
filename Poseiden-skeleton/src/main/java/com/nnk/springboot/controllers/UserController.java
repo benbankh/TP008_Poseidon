@@ -4,6 +4,7 @@ import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @Controller
@@ -19,6 +21,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @RolesAllowed({"USER","ADMIN"})
     @RequestMapping("/user/list")   // sans spécifier l'attribut method => mappée à toutes les méthodes HTTP par défaut. Cela inclut les requêtes GET, POST, PUT, DELETE, etc.
     public String home(Model model)
     {
@@ -35,8 +38,8 @@ public class UserController {
     @PostMapping("/user/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
         if (!result.hasErrors()) {
-           // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-           // user.setPassword(encoder.encode(user.getPassword()));
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user.setPassword(encoder.encode(user.getPassword()));
             user.setPassword(user.getPassword());
             userRepository.save(user);
 
@@ -68,8 +71,8 @@ public class UserController {
             return "user/update";
         }
 
-        //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        //user.setPassword(encoder.encode(user.getPassword()));
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
         user.setPassword(user.getPassword());
         user.setId(id);
         userRepository.save(user);
